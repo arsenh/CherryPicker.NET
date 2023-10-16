@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CherryPicker.NET.tools;
+namespace CherryPicker.NET.collector;
 
-public class CherryPick
+public class Collect
 {
-    private string? jsonFilePath;
+    private IEnumerable<string>? domains;
 
-    public CherryPick(string? jsonFilePath)
+    public Collect(IEnumerable<string>? domains)
     {
-        this.jsonFilePath = jsonFilePath;
+        this.domains = domains;
     }
 
     public void Process()
