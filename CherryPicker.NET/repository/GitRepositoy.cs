@@ -10,18 +10,5 @@ namespace CherryPicker.NET.repository;
 
 public class GitRepositoy
 {
-    public static bool IsGitRepository(string path)
-    {
-        try
-        {
-            using (var repo = new Repository(path))
-            {
-                return true;
-            }
-        }
-        catch (RepositoryNotFoundException)
-        {
-            return false;
-        }
-    }
+    
 }

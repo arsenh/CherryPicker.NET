@@ -1,5 +1,6 @@
 ﻿using CherryPicker.NET.messages;
 using CherryPicker.NET.repository;
+using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ public class CommandLineValidator
 
         if (string.IsNullOrEmpty(options.RepoPath))
             throw new ArgumentException(UserMessages.RepoPathIsNotSet);
-        if (! GitRepositoy.IsGitRepository(options.RepoPath))
+        if (! IsGitRepository(options.RepoPath))
             throw new ArgumentException(UserMessages.InvalidGitPath);
 
         ValidateOptionsByMode();
@@ -81,6 +82,21 @@ public class CommandLineValidator
         if (string.IsNullOrEmpty(options.JsonFilePath))
         {
             throw new InvalidDataException(UserMessages.JsonFilePathIsNotSet);
+        }
+    }
+
+    public bool IsGitRepository(string path)
+    {
+        try
+        {
+            using (var repo = new Repository(path))
+            {
+                return true;
+            }
+        }
+        catch (RepositoryNotFoundException)
+        {
+            return false;
         }
     }
 }

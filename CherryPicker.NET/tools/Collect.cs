@@ -10,7 +10,7 @@ public class Collect
 {
     private IEnumerable<string>? domains;
 
-    public Collect(IEnumerable<string>? domains)
+    public Collect(IEnumerable<string>? domains, string repoPath)
     {
         this.domains = domains;
     }
