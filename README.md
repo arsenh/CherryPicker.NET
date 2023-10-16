@@ -27,7 +27,6 @@ Base user functionality.
 	}
 
 	1.3 collector can have one external command "--consoleOut" to print human-readable table in terminal for further copy/paste to text editor for analyzation
-	1.4
 
 2. cherry pick to another branch.
 
@@ -41,3 +40,13 @@ Before using this command, user must checout the target branch.
 	2.6.1
 		- report about conflicts and perform 'cherry-pick --continue'
 		- handle other errors ...
+		
+		
+ TODO: parse command line arguemnts.
+  
+CherryPicker.NET command line options:
+1. [collect] or [cherry-pick]
+
+for collect -> --repo <repo path> --domains {domain1, domain2, domain3, ...}
+
+2. for cherry-pick -> --repo <repo_path> --file <json file>
