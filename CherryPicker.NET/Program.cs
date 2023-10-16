@@ -1,7 +1,16 @@
-﻿using CommandLine;
+﻿using CherryPicker.NET.validator;
+using CommandLine;
 
 Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
-    //do something
+    CommandLineValidator validator = new CommandLineValidator(o);
+    if (validator.IsCollectModeEnabled())
+    {
+        Console.WriteLine("Working in collect mode.");
+    }
+    else if (validator.IsCherryPickEnabled())
+    {
+        Console.WriteLine("Working in collect mode.");
+    }
 });
 
 
