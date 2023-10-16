@@ -68,15 +68,19 @@ public class CommandLineValidator
         }
     }
 
-    private void ValidateJsonPathPatameter()
-    {
-        // TODO
-        throw new NotImplementedException();
-    }
-
     private void ValidateDomainsPatameter()
     {
-        // TODO
-        throw new NotImplementedException();
+        if (options.Domains == null)
+        {
+            throw new InvalidDataException(UserMessages.DomainsIsNotSet);
+        }
+    }
+
+    private void ValidateJsonPathPatameter()
+    {
+        if (string.IsNullOrEmpty(options.JsonFilePath))
+        {
+            throw new InvalidDataException(UserMessages.JsonFilePathIsNotSet);
+        }
     }
 }

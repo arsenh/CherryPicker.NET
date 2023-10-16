@@ -11,8 +11,9 @@ Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
         validator.Validate();
     } catch (Exception ex)
     {
-        Console.WriteLine(ex.ToString());
+        Console.WriteLine(ex.Message);
         Console.WriteLine(UserMessages.UseHelpForInfo);
+        return;
     }
     if (validator.IsCollectModeEnabled())
     {
@@ -23,15 +24,15 @@ Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
     else if (validator.IsCherryPickEnabled())
     {
         CherryPick cherryPick = new(o.JsonFilePath);
-        cherryPick.Process();
-        Console.WriteLine("Working in collect mode.");
+        //cherryPick.Process();
+        //Console.WriteLine("Working in cherry-pick mode.");
     }
 });
 
 
 public class Options
 {
-    [Option('m', "mode", Required = true, HelpText = "Specifies the coordinates (x,y).")]
+    [Option('m', "mode", Required = true, HelpText = "Specifies the mode (collect,cherry-pick).")]
     public string? Mode { get; set; }
 
     [Option('r', "repo", Required = true, HelpText = "Path to GIT repository.")]
