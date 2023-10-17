@@ -10,7 +10,6 @@ namespace CherryPicker.NET.repository;
 
 public class GitRepositoy
 {
-
     private readonly IRepository repository;
     public GitRepositoy(string path)
     {
@@ -19,14 +18,19 @@ public class GitRepositoy
 
     public List<Commit> GetAllCommits()
     {
-        List<Commit> commits = new();
-        IQueryableCommitLog gitLog = repository!.Commits;
+        List<Commit> commits = new List<Commit>();
+        var filter = new CommitFilter()
+        {
+            SortBy = CommitSortStrategies.Reverse
+        };
+        var gitLog = repository.Commits.QueryBy(filter).ToList();
         gitLog.ToList().ForEach(c => {
-            Commit commit = new Commit();
-            commit.hash = c.Sha.ToString();
-            commit.email = c.Author.Email.ToString();
-            commit.author = c.Author.Name.ToString();
-            commit.message = c.Message;
+            Commit commit = new() { 
+                Hash = c.Sha.ToString(),
+                Email = c.Author.Email.ToString(),
+                Author = c.Author.Name.ToString(),
+                Message = c.Message
+            };
             commits.Add(commit);
         });
         return commits;

@@ -22,10 +22,11 @@ public class Collect
 
     public void Process()
     {
+        //TODO: GetAllCommits must be have one argument domains to filter commits.
         List<Commit> commits = gitRepo.GetAllCommits();
         string output = JsonListSerializer.Serialize(commits);
-        string fileName = "output.json";
+        Console.WriteLine($"json serialize output: {output}");
         OutputFile file = new OutputFile();
-        //file.Write(output);
+        file.Write(output);
     }
 }

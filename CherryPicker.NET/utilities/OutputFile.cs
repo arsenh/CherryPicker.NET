@@ -28,7 +28,7 @@ public class OutputFile
     {
         return new StringBuilder()
         .Append("collect_")
-        .Append(DateTime.Now.ToString("MM_dd_yyyy_h:mm"))
+        .Append(DateTime.Now.ToString("MM_dd_yyyy_h_mm_ss"))
         .Append(".json").ToString();
     }
 }
