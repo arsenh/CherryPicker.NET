@@ -32,7 +32,7 @@ public class Collect
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine(String.Format(UserMessages.JsonFileIsCreated, file.Name));
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("Use 'cherry-pick' mode to cherry-pick commits from the JSON file.");
+        Console.WriteLine(UserMessages.UseCherryPick);
         Console.ForegroundColor = ConsoleColor.White;
     }
 }
