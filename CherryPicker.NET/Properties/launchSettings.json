@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "CherryPicker.NET": {
-      "commandName": "Project",
-      "commandLineArgs": "-m collect -r ../../../../test/repo -d google gmail"
-    }
-  }
-}

@@ -17,6 +17,7 @@ Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
     }
     if (validator.IsCollectModeEnabled())
     {
+        Console.WriteLine("Working in collect mode.");
         Collect collector = new(o.Domains, o.RepoPath);
         collector.Process();
     }
