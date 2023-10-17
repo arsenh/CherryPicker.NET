@@ -16,4 +16,5 @@ public class UserMessages
     public static string DomainsIsNotSet = "Domains is not set.";
     public static string JsonFilePathIsNotSet = "Json file path is not set.";
     public static string JsonFileIsCreated =  "{0} is created.";
+    public static string UseCherryPick = "Use 'cherry-pick' mode to cherry-pick commits from the JSON file."
 }
