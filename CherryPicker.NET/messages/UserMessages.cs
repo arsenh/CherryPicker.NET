@@ -15,4 +15,5 @@ public class UserMessages
     public static string RepoPathIsNotSet = "Repo path is not set.";
     public static string DomainsIsNotSet = "Domains is not set.";
     public static string JsonFilePathIsNotSet = "Json file path is not set.";
+    public static string JsonFileIsCreated =  "{0} is created.";
 }

@@ -1,9 +1,11 @@
 ﻿using CherryPicker.NET.jsonserializer;
+using CherryPicker.NET.messages;
 using CherryPicker.NET.repository;
 using CherryPicker.NET.utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,10 +24,15 @@ public class Collect
 
     public void Process()
     {
+        Console.WriteLine("Selected 'collect' mode.");
         List<Commit> commits = gitRepo.GetAllCommits(domains);
         string output = JsonListSerializer.Serialize(commits);
-        Console.WriteLine($"json serialize output: {output}");
         OutputFile file = new OutputFile();
         file.Write(output);
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine(String.Format(UserMessages.JsonFileIsCreated, file.Name));
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Use 'cherry-pick' mode to cherry-pick commits from the JSON file.");
+        Console.ForegroundColor = ConsoleColor.White;
     }
 }

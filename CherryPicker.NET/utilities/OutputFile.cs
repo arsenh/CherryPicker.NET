@@ -9,15 +9,15 @@ namespace CherryPicker.NET.utilities;
 
 public class OutputFile
 {
-    public string FileName { get; init; }
+    public string Name { get; init; }
     public OutputFile()
     {
-        FileName = GenerateNameForFile();
+        Name = GenerateNameForFile();
     }
 
     public void Write(string data)
     {
-        using (FileStream fs = File.Create(FileName))
+        using (FileStream fs = File.Create(Name))
         {
             byte[] contentBytes = System.Text.Encoding.UTF8.GetBytes(data);
             fs.Write(contentBytes, 0, contentBytes.Length);
