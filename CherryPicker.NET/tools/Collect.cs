@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CherryPicker.NET.jsonserializer;
+using CherryPicker.NET.repository;
+using CherryPicker.NET.utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,14 +12,20 @@ namespace CherryPicker.NET.collector;
 public class Collect
 {
     private IEnumerable<string>? domains;
+    private GitRepositoy gitRepo;
 
-    public Collect(IEnumerable<string>? domains, string repoPath)
+    public Collect(IEnumerable<string>? domains, string? repoPath)
     {
         this.domains = domains;
+        this.gitRepo = new GitRepositoy(repoPath!);
     }
 
     public void Process()
     {
-        throw new NotImplementedException();
+        List<Commit> commits = gitRepo.GetAllCommits();
+        string output = JsonListSerializer.Serialize(commits);
+        string fileName = "output.json";
+        OutputFile file = new OutputFile();
+        //file.Write(output);
     }
 }
