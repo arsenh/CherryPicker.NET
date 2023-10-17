@@ -16,7 +16,7 @@ public class GitRepositoy
         repository = new Repository(path);
     }
 
-    public List<Commit> GetAllCommits()
+    public List<Commit> GetAllCommits(IEnumerable<string>? domains)
     {
         List<Commit> commits = new List<Commit>();
         var filter = new CommitFilter()
@@ -31,8 +31,21 @@ public class GitRepositoy
                 Author = c.Author.Name.ToString(),
                 Message = c.Message
             };
-            commits.Add(commit);
+            if(IsCommitNeedToAdd(commit, domains))
+                commits.Add(commit);
         });
         return commits;
+    }
+
+    private bool IsCommitNeedToAdd(Commit commit, IEnumerable<string>? domains)
+    {
+        string email = commit.Email;
+        string[] parts = email.Split('@');
+        string commitDomain = parts[1].Split('.')[0];
+        if (domains == null || !domains.Any())
+        {
+            return true;
+        }
+        return !(null == domains.FirstOrDefault(domain => domain.Equals("all") || domain.Equals(commitDomain)));
     }
 }

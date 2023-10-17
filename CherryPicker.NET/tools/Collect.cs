@@ -22,8 +22,7 @@ public class Collect
 
     public void Process()
     {
-        //TODO: GetAllCommits must be have one argument domains to filter commits.
-        List<Commit> commits = gitRepo.GetAllCommits();
+        List<Commit> commits = gitRepo.GetAllCommits(domains);
         string output = JsonListSerializer.Serialize(commits);
         Console.WriteLine($"json serialize output: {output}");
         OutputFile file = new OutputFile();
