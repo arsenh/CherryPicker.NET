@@ -1,6 +1,8 @@
-﻿using LibGit2Sharp;
+﻿using CherryPicker.NET.messages;
+using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -10,10 +12,12 @@ namespace CherryPicker.NET.repository;
 
 public class GitRepositoy
 {
-    private readonly IRepository repository;
+    private readonly Repository repository;
+    private readonly string repoPath;
     public GitRepositoy(string path)
     {
         repository = new Repository(path);
+        repoPath = path;
     }
 
     public List<Commit> GetAllCommits(IEnumerable<string>? domains)
@@ -24,18 +28,59 @@ public class GitRepositoy
             SortBy = CommitSortStrategies.Reverse
         };
         var gitLog = repository.Commits.QueryBy(filter).ToList();
-        gitLog.ToList().ForEach(c => {
-            Commit commit = new() { 
+        gitLog.ToList().ForEach(c =>
+        {
+            Commit commit = new()
+            {
                 Hash = c.Sha.ToString(),
                 Email = c.Author.Email.ToString(),
                 Author = c.Author.Name.ToString(),
                 Message = c.Message
             };
-            if(IsCommitNeedToAdd(commit, domains))
+            if (IsCommitNeedToAdd(commit, domains))
                 commits.Add(commit);
         });
         return commits;
     }
+
+    public string GetCommitChanges(Commit commit)
+    {
+        StringBuilder output = new StringBuilder();
+        string command = $"git show {commit.Hash}";
+        ProcessStartInfo startInfo = new ProcessStartInfo
+        {
+            FileName = GetPlatformShell(),
+            Arguments = $"{GetExecuteAndTerminateCommand()} {command}",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            WorkingDirectory = Path.GetFullPath(repoPath)
+        };
+
+        using (Process process = new Process())
+        {
+            process.StartInfo = startInfo;
+            process.OutputDataReceived += (sender, e) => output.AppendLine(e.Data);
+            process.Start();
+            process.BeginOutputReadLine();
+            process.WaitForExit();
+        }
+        return output.ToString();
+    }
+
+    private string GetPlatformShell() => Environment.OSVersion.Platform switch
+    {
+        PlatformID.Unix => "/bin/bash",
+        PlatformID.Win32NT => "cmd.exe",
+        _ => throw new PlatformNotSupportedException(UserMessages.PlatformNotSupported)
+    };
+
+    private string GetExecuteAndTerminateCommand() => Environment.OSVersion.Platform switch
+    {
+        PlatformID.Unix => " ",
+        PlatformID.Win32NT => "/C",
+        _ => throw new PlatformNotSupportedException(UserMessages.PlatformNotSupported)
+    };
 
     private bool IsCommitNeedToAdd(Commit commit, IEnumerable<string>? domains)
     {

@@ -14,10 +14,12 @@ namespace CherryPicker.NET.tools;
 public class CherryPick
 {
     private string jsonFilePath;
+    private GitRepositoy gitRepo;
 
-    public CherryPick(string? jsonFilePath)
+    public CherryPick(string? jsonFilePath, string? repoPath)
     {
         this.jsonFilePath = jsonFilePath!;
+        this.gitRepo = new GitRepositoy(repoPath!);
     }
 
     public void Process()
@@ -60,8 +62,14 @@ public class CherryPick
         ProcessCommitHashMessage(commit);
         if (UserInputValidator.YesAndNoQuestion(UserMessages.GitShow))
         {
-            Console.WriteLine("Show git changes");
+            ShowGitChanges(commit);
         }
         Console.WriteLine("Process cherry-pick");
+    }
+
+    private void ShowGitChanges(Commit commit)
+    {
+        string changes = gitRepo.GetCommitChanges(commit);
+        Console.WriteLine(changes);
     }
 }

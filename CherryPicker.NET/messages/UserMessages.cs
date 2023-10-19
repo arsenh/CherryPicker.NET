@@ -31,4 +31,5 @@ public class UserMessages
     public const string EnterYesNoCharacters = "Please enter character from this list {y, Y, n, N}: ";
     public const string WorkingCollectMode = "Working in collect mode.";
     public const string WorkingCherryPickMode = "Working in cherry-pick mode.";
+    public const string PlatformNotSupported = "This platform not supported.";
 }

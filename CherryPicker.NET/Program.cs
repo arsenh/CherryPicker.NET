@@ -24,7 +24,7 @@ Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
     else if (validator.IsCherryPickEnabled())
     {
         Console.WriteLine(UserMessages.WorkingCherryPickMode);
-        CherryPick cherryPick = new(o.JsonFilePath);
+        CherryPick cherryPick = new(o.JsonFilePath, o.RepoPath);
         try
         {
             cherryPick.Process();
