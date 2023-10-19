@@ -1,7 +1,6 @@
-﻿using CherryPicker.NET.jsonserializer;
-using CherryPicker.NET.messages;
-using CherryPicker.NET.repository;
-using CherryPicker.NET.utilities;
+﻿using CherryPicker.NET.Utilities;
+using CherryPicker.NET.Messages;
+using CherryPicker.NET.GITRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CherryPicker.NET.collector;
+namespace CherryPicker.NET.Tools;
 
 public class Collect
 {

@@ -1,7 +1,6 @@
-﻿using CherryPicker.NET.collector;
-using CherryPicker.NET.messages;
-using CherryPicker.NET.tools;
-using CherryPicker.NET.validator;
+﻿using CherryPicker.NET.Messages;
+using CherryPicker.NET.Tools;
+using CherryPicker.NET.Validator;
 using CommandLine;
 
 Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {

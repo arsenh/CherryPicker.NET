@@ -1,11 +1,11 @@
-﻿using CherryPicker.NET.messages;
+﻿using CherryPicker.NET.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CherryPicker.NET.validator;
+namespace CherryPicker.NET.Validator;
 
 public class UserInputValidator
 {

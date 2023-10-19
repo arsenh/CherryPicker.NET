@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CherryPicker.NET.messages;
+namespace CherryPicker.NET.Messages;
 
 public class UserMessages
 {

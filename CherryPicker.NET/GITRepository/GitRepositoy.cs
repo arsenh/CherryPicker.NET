@@ -1,4 +1,5 @@
-﻿using CherryPicker.NET.messages;
+﻿using CherryPicker.NET.Messages;
+using CherryPicker.NET.Utilities;
 using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CherryPicker.NET.repository;
+namespace CherryPicker.NET.GITRepository;
 
 public class GitRepositoy
 {
@@ -49,8 +50,8 @@ public class GitRepositoy
         string command = $"git show {commit.Hash}";
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
-            FileName = GetPlatformShell(),
-            Arguments = $"{GetExecuteAndTerminateCommand()} {command}",
+            FileName = Platform.GetPlatformShell(),
+            Arguments = $"{Platform.GetExecuteAndTerminateCommand()} {command}",
             RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true,
@@ -67,20 +68,6 @@ public class GitRepositoy
         }
         return output.ToString();
     }
-
-    private string GetPlatformShell() => Environment.OSVersion.Platform switch
-    {
-        PlatformID.Unix => "/bin/bash",
-        PlatformID.Win32NT => "cmd.exe",
-        _ => throw new PlatformNotSupportedException(UserMessages.PlatformNotSupported)
-    };
-
-    private string GetExecuteAndTerminateCommand() => Environment.OSVersion.Platform switch
-    {
-        PlatformID.Unix => " ",
-        PlatformID.Win32NT => "/C",
-        _ => throw new PlatformNotSupportedException(UserMessages.PlatformNotSupported)
-    };
 
     private bool IsCommitNeedToAdd(Commit commit, IEnumerable<string>? domains)
     {

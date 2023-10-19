@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CherryPicker.NET.utilities;
+namespace CherryPicker.NET.Utilities;
 
 public class InputFile
 {

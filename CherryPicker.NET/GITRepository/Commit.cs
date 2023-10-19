@@ -1,4 +1,4 @@
-﻿namespace CherryPicker.NET.repository;
+﻿namespace CherryPicker.NET.GITRepository;
 
 public struct Commit
 {

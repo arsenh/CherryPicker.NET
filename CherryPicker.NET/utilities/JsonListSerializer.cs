@@ -1,4 +1,4 @@
-﻿using CherryPicker.NET.repository;
+﻿using CherryPicker.NET.GITRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace CherryPicker.NET.jsonserializer;
+namespace CherryPicker.NET.Utilities;
 
 public class JsonListSerializer
 {
