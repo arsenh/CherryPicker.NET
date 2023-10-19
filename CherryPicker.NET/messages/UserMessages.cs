@@ -28,8 +28,14 @@ public class UserMessages
     public const string CollectModeStarted = "Collect mode started.";
     public const string FileIsEmpty = "{0} file is empty. Nothing to do.";
     public const string GitShow = "Do you want to see changes (git show)";
-    public const string EnterYesNoCharacters = "Please enter character from this list {y, Y, n, N}: ";
+    public const string EnterYesNoCharacters = "Please enter character from this list {y, n}: ";
+    public const string EnterCherryPickCommandCharacters = "Please enter character from this list {c, a, e}: ";
     public const string WorkingCollectMode = "Working in collect mode.";
     public const string WorkingCherryPickMode = "Working in cherry-pick mode.";
     public const string PlatformNotSupported = "This platform not supported.";
+    public const string PerformCherryPick = "Perform cherry-pick for {0} commit.";
+    public const string WhatCherryPickOperationPerform = "What operation to perform (c/a/e) ?";
+    public const string CommandCherryPickContinue = "c - continue (do after resolving conflicts manually)";
+    public const string CommandCherryPickAbort = "a - abort";
+    public const string CommandCherryPickExit = "e - exit from the program";
 }

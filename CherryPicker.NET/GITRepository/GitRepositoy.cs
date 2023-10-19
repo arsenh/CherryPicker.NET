@@ -51,6 +51,26 @@ public class GitRepositoy
         return Platform.RunExternalCommand(command, workingDir);
     }
 
+    public bool PerformCherryPick(Commit commit)
+    {
+        LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
+        var result = repository.CherryPick(commitToCherryPick, commitToCherryPick.Author);
+        return result.Status == CherryPickStatus.CherryPicked;
+    }
+
+    public void PerformCherryPickAbort(Commit commit)
+    {
+        LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
+        repository.Revert(commitToCherryPick, commitToCherryPick.Author);
+    }
+
+    public void PerformCherryPickContinue(Commit commit)
+    {
+        LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
+        var signature = new Signature(commit.Author, commit.Email, DateTimeOffset.Now);
+        repository.Commit(commit.Message, signature, signature);
+    }
+
     private bool IsCommitNeedToAdd(Commit commit, IEnumerable<string>? domains)
     {
         string email = commit.Email;

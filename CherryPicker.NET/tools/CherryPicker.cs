@@ -63,12 +63,39 @@ public class CherryPick
         {
             ShowGitChanges(commit);
         }
-        Console.WriteLine("Process cherry-pick");
+        if (UserInputValidator.YesAndNoQuestion(string.Format(UserMessages.PerformCherryPick, commit.Hash)))
+        {
+            ProcessCherryPick(commit);
+        }
     }
 
     private void ShowGitChanges(Commit commit)
     {
         string changes = gitRepo.GetCommitChanges(commit);
         Console.WriteLine(changes);
+    }
+
+    private void ProcessCherryPick(Commit commit)
+    {
+        if (gitRepo.PerformCherryPick(commit))
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Cherry-Pick Operation finished successfully.");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Cherry-Pick Operation finished with conflicts.");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            var command = UserInputValidator.CherryPickCommandQuestion();
+            switch (command)
+            {
+                case UserInputValidator.Answer.Continue: gitRepo.PerformCherryPickContinue(commit); break; // handle exception during --continue.
+                case UserInputValidator.Answer.Abort: gitRepo.PerformCherryPickAbort(commit); break;
+                case UserInputValidator.Answer.Exit: Environment.Exit(0); break;
+            }
+        }
     }
 }
