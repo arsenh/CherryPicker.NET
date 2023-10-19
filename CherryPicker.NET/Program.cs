@@ -17,30 +17,39 @@ Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
     }
     if (validator.IsCollectModeEnabled())
     {
-        Console.WriteLine("Working in collect mode.");
+        Console.WriteLine(UserMessages.WorkingCollectMode);
         Collect collector = new(o.Domains, o.RepoPath);
         collector.Process();
     }
     else if (validator.IsCherryPickEnabled())
     {
+        Console.WriteLine(UserMessages.WorkingCherryPickMode);
         CherryPick cherryPick = new(o.JsonFilePath);
-        //cherryPick.Process();
-        //Console.WriteLine("Working in cherry-pick mode.");
+        try
+        {
+            cherryPick.Process();
+        } catch(FileNotFoundException ex) {
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(UserMessages.UseHelpForInfo);
+        } catch (FileLoadException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 });
 
 
 public class Options
 {
-    [Option('m', "mode", Required = true, HelpText = "Specifies the mode (collect,cherry-pick).")]
+    [Option('m', "mode", Required = true, HelpText = UserMessages.OptionMode)]
     public string? Mode { get; set; }
 
-    [Option('r', "repo", Required = true, HelpText = "Path to GIT repository.")]
+    [Option('r', "repo", Required = true, HelpText = UserMessages.OptionRepo)]
     public string? RepoPath { get; set; }
 
-    [Option('d', "domains", Required = false, HelpText = "Domains.")]
+    [Option('d', "domains", Required = false, HelpText = UserMessages.OptionDomains)]
     public IEnumerable<string>? Domains { get; set; }
 
-    [Option('f', "file", Required = false, HelpText = "Json file for cherry-pick.")]
+    [Option('f', "file", Required = false, HelpText = UserMessages.OptionFile)]
     public string? JsonFilePath { get; set; }
 }

@@ -24,12 +24,12 @@ public class Collect
 
     public void Process()
     {
-        Console.WriteLine("Selected 'collect' mode.");
+        Console.WriteLine(UserMessages.CollectModeStarted);
         List<Commit> commits = gitRepo.GetAllCommits(domains);
         string output = JsonListSerializer.Serialize(commits);
         OutputFile file = new OutputFile();
         file.Write(output);
-        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine(String.Format(UserMessages.JsonFileIsCreated, file.Name));
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine(UserMessages.UseCherryPick);
