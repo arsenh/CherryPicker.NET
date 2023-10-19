@@ -46,27 +46,9 @@ public class GitRepositoy
 
     public string GetCommitChanges(Commit commit)
     {
-        StringBuilder output = new StringBuilder();
         string command = $"git show {commit.Hash}";
-        ProcessStartInfo startInfo = new ProcessStartInfo
-        {
-            FileName = Platform.GetPlatformShell(),
-            Arguments = $"{Platform.GetExecuteAndTerminateCommand()} {command}",
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-            WorkingDirectory = Path.GetFullPath(repoPath)
-        };
-
-        using (Process process = new Process())
-        {
-            process.StartInfo = startInfo;
-            process.OutputDataReceived += (sender, e) => output.AppendLine(e.Data);
-            process.Start();
-            process.BeginOutputReadLine();
-            process.WaitForExit();
-        }
-        return output.ToString();
+        string workingDir = Path.GetFullPath(repoPath);
+        return Platform.RunExternalCommand(command, workingDir);
     }
 
     private bool IsCommitNeedToAdd(Commit commit, IEnumerable<string>? domains)
