@@ -61,15 +61,13 @@ public class GitRepositoy
     public void PerformCherryPickAbort(Commit commit)
     {
         LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
-        repository.Revert(commitToCherryPick, new Signature(commitToCherryPick.Author.Name,
-                                        commitToCherryPick.Author.Email, DateTimeOffset.Now));
+        repository.Revert(commitToCherryPick, commitToCherryPick.Committer);
     }
 
     public void PerformCherryPickContinue(Commit commit)
     {
         LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
-        var signature = new Signature(commit.Author, commit.Email, DateTimeOffset.Now);
-        repository.Commit(commit.Message, signature, signature);
+        repository.Commit(commit.Message, commitToCherryPick.Committer, commitToCherryPick.Committer);
     }
 
     private bool IsCommitNeedToAdd(Commit commit, IEnumerable<string>? domains)
