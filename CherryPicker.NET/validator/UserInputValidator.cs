@@ -51,6 +51,7 @@ public class UserInputValidator
         Console.WriteLine(UserMessages.CommandCherryPickExit);
         char answer = ' ';
         int index = 0;
+        Console.Write("Command: ");
         while (true)
         {
             answer = Console.ReadKey().KeyChar;

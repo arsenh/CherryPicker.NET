@@ -60,8 +60,7 @@ public class GitRepositoy
 
     public void PerformCherryPickAbort(Commit commit)
     {
-        LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
-        repository.Revert(commitToCherryPick, commitToCherryPick.Committer);
+        repository.Reset(ResetMode.Hard, repository.Head.Tip);
     }
 
     public void PerformCherryPickContinue(Commit commit)
