@@ -66,7 +66,9 @@ public class GitRepositoy
     public void PerformCherryPickContinue(Commit commit)
     {
         LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
-        repository.Commit(commit.Message, commitToCherryPick.Committer, commitToCherryPick.Committer);
+        Commands.Stage(repository, "*");
+        repository.Commit(commitToCherryPick.Message, commitToCherryPick.Committer, commitToCherryPick.Committer,
+                                                    new CommitOptions() { AllowEmptyCommit = true });
     }
 
     private bool IsCommitNeedToAdd(Commit commit, IEnumerable<string>? domains)

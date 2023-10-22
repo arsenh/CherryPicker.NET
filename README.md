@@ -50,3 +50,9 @@ CherryPicker.NET command line options:
 for collect -> --repo <repo path> --domains {domain1, domain2, domain3, ...}
 
 2. for cherry-pick -> --repo <repo_path> --file <json file>
+
+
+TODO:
+1) abort finished with exception
+2) continue finished with exception
+3) CherryPickCommandQuestion -> add answer cursor possition.
