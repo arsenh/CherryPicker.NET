@@ -54,14 +54,15 @@ public class GitRepositoy
     public bool PerformCherryPick(Commit commit)
     {
         LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
-        var result = repository.CherryPick(commitToCherryPick, commitToCherryPick.Author);
+        var result = repository.CherryPick(commitToCherryPick, commitToCherryPick.Committer);
         return result.Status == CherryPickStatus.CherryPicked;
     }
 
     public void PerformCherryPickAbort(Commit commit)
     {
         LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
-        repository.Revert(commitToCherryPick, commitToCherryPick.Author);
+        repository.Revert(commitToCherryPick, new Signature(commitToCherryPick.Author.Name,
+                                        commitToCherryPick.Author.Email, DateTimeOffset.Now));
     }
 
     public void PerformCherryPickContinue(Commit commit)
