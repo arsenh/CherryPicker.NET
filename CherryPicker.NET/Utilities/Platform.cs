@@ -17,29 +17,47 @@ public class Platform
         _ => throw new PlatformNotSupportedException(UserMessages.PlatformNotSupported)
     };
 
-    public static string GetExecuteAndTerminateCommand() => Environment.OSVersion.Platform switch
+    public static ProcessStartInfo GetProcessInfoForWindows(string hash, string workingDir)
     {
-        PlatformID.Unix => " ",
-        PlatformID.Win32NT => "/C",
-        _ => throw new PlatformNotSupportedException(UserMessages.PlatformNotSupported)
-    };
-
-    public static string RunExternalCommand(string command, string workingDir)
-    {
-        StringBuilder output = new StringBuilder();
-        ProcessStartInfo startInfo = new ProcessStartInfo
+        return new ProcessStartInfo
         {
-            FileName = Platform.GetPlatformShell(),
-            Arguments = $"{Platform.GetExecuteAndTerminateCommand()} {command}",
+            FileName = "cmd.exe",
+            Arguments = $"/C git show {hash}",
             RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true,
             WorkingDirectory = workingDir
         };
+    }
+
+    public static ProcessStartInfo GetProcessInfoForUnix(string hash, string workingDir)
+    {
+        return new ProcessStartInfo
+        {
+            FileName = "/usr/bin/git",
+            Arguments = $"show {hash}",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            WorkingDirectory = workingDir
+        };
+    }
+
+    public static string RunExternalCommand(string hash, string workingDir)
+    {
+        StringBuilder output = new StringBuilder();
+        ProcessStartInfo? info = null;
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+            info = GetProcessInfoForWindows(hash, workingDir);
+        } else if(Environment.OSVersion.Platform == PlatformID.Unix) {
+            info = GetProcessInfoForUnix(hash, workingDir);
+        } else {
+            throw new PlatformNotSupportedException(UserMessages.PlatformNotSupported);
+        }
 
         using (Process process = new Process())
         {
-            process.StartInfo = startInfo;
+            process.StartInfo = info;
             process.OutputDataReceived += (sender, e) => output.AppendLine(e.Data);
             process.Start();
             process.BeginOutputReadLine();

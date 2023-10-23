@@ -46,9 +46,8 @@ public class GitRepositoy
 
     public string GetCommitChanges(Commit commit)
     {
-        string command = $"git show {commit.Hash}";
         string workingDir = Path.GetFullPath(repoPath);
-        return Platform.RunExternalCommand(command, workingDir);
+        return Platform.RunExternalCommand(commit.Hash, workingDir);
     }
 
     public bool PerformCherryPick(Commit commit)
