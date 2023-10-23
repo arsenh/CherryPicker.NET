@@ -4,6 +4,8 @@ Prerequisites: GIT version control tool.
 
 Tool working in two modes collect and cherry-pick.
 
+Build: `dotnet build`
+
 To getting information use `$ ./CherryPicker.NET --help`
 ```
 CherryPicker.NET 1.0.0
