@@ -6,6 +6,8 @@ Tool working in two modes collect and cherry-pick.
 
 Build: `dotnet build`
 
+Dotnet version: `7.0.112`
+
 To getting information use `$ ./CherryPicker.NET --help`
 ```
 CherryPicker.NET 1.0.0
