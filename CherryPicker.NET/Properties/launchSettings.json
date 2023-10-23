@@ -1,8 +1,7 @@
 {
   "profiles": {
     "CherryPicker.NET": {
-      "commandName": "Project",
-      "commandLineArgs": ".\\CherryPicker.NET.exe -m cherry-pick -r .\\repo\\ -f collect_10_22_2023_1_57_45.json"
+      "commandName": "Project"
     }
   }
 }
