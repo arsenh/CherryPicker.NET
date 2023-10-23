@@ -92,7 +92,7 @@ public class CherryPick
             var command = UserInputValidator.CherryPickCommandQuestion();
             switch (command)
             {
-                case UserInputValidator.Answer.Continue: gitRepo.PerformCherryPickContinue(commit); break; // handle exception during --continue.
+                case UserInputValidator.Answer.Continue: gitRepo.PerformCherryPickContinue(commit); break;
                 case UserInputValidator.Answer.Abort: gitRepo.PerformCherryPickAbort(commit); break;
                 case UserInputValidator.Answer.Exit: Environment.Exit(0); break;
             }

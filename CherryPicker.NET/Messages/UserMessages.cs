@@ -35,6 +35,7 @@ public class UserMessages
     public const string PlatformNotSupported = "This platform not supported.";
     public const string PerformCherryPick = "Perform cherry-pick for {0} commit.";
     public const string WhatCherryPickOperationPerform = "What operation to perform (c/a/e) ?";
+    public const string NoChangesNothingToCommit = "No changes; nothing to commit";
     public const string CommandCherryPickContinue = "c - continue (do after resolving conflicts manually)";
     public const string CommandCherryPickAbort = "a - abort";
     public const string CommandCherryPickExit = "e - exit from the program";

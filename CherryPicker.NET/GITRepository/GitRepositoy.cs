@@ -52,9 +52,17 @@ public class GitRepositoy
 
     public bool PerformCherryPick(Commit commit)
     {
+        CherryPickResult result = null;
         LibGit2Sharp.Commit commitToCherryPick = repository.Lookup<LibGit2Sharp.Commit>(commit.Hash);
-        var result = repository.CherryPick(commitToCherryPick, commitToCherryPick.Committer);
-        return result.Status == CherryPickStatus.CherryPicked;
+        try
+        {
+            result = repository.CherryPick(commitToCherryPick, commitToCherryPick.Committer);
+        } catch (LibGit2Sharp.EmptyCommitException e)
+        {
+            Console.WriteLine(UserMessages.NoChangesNothingToCommit);
+            return true;
+        }
+        return result!.Status == CherryPickStatus.CherryPicked;
     }
 
     public void PerformCherryPickAbort(Commit commit)
